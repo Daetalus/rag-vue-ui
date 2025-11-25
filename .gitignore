@@ -1,0 +1,30 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+backend/venv
+backend/handbook_rapid_space
+backend/handbook_rapid_space_bk
+node_modules
+dist
+dist-ssr
+*.local
+
+backend/nexedi_doc_vec_haystack_v3/chroma.sqlite3
+backend/nexedi_doc_vec_langchain_gemma/chroma.sqlite3
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
