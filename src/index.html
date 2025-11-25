@@ -1,77 +1,107 @@
-<!doctype html>
-<html lang="en" class="h-full">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RJS Chat Container Demo</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.11/dist/tailwind.min.css"
-    />
+    <meta charset="utf-8">
+    <title>RenderJS Chat Container</title>
+
+    <!-- RenderJS 依赖 -->
     <script src="rsvp.js"></script>
     <script src="renderjs.js"></script>
+
+    <!-- 本 gadget 逻辑 -->
+    <script src="./rjs_components/chat_container_gadget.js"></script>
+
+    <!-- 可以继续沿用你原来 Tailwind 的类名 -->
+    <style>
+      /* 只补几个最基本的样式，假如没有 Tailwind 也能看 */
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      .page-root {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .chat-log-container {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .chat-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .chat-message {
+        padding: 0.5rem 1rem;
+      }
+
+      .chat-message:nth-child(odd) {
+        background: #f5f5f5;
+      }
+
+      .chat-input-row {
+        display: flex;
+        padding: 0.5rem;
+        gap: 0.5rem;
+        border-top: 1px solid #ddd;
+      }
+
+      .chat-input-row input[type="text"] {
+        flex: 1;
+        padding: 0.4rem 0.6rem;
+      }
+
+      .chat-input-row button {
+        padding: 0.4rem 0.8rem;
+      }
+    </style>
   </head>
-  <body class="h-full bg-slate-950 text-slate-100">
-    <main class="min-h-screen">
-      <div class="mx-auto max-w-4xl px-4 py-10">
-        <header class="mb-6 space-y-2">
-          <p class="text-sm font-semibold uppercase tracking-wide text-emerald-400">
-            Nexedi RenderJS
-          </p>
-          <h1 class="text-3xl font-bold leading-tight">ChatContainer RJS Demo</h1>
-          <p class="text-slate-300">
-            This page renders the chat container as a Nexedi RenderJS gadget while
-            keeping Tailwind CSS styles in place.
-          </p>
-        </header>
-        <section
-          id="chat-root"
-          class="h-[520px] rounded-xl border border-slate-800 bg-slate-900/70 shadow-lg"
-        ></section>
+
+  <body>
+    <!-- 整个页面就是一个 RenderJS gadget（对应原来的 ChatContainerRoot 根） -->
+    <div class="page-root">
+      <!-- ChatContainerRoot：外层可滚动容器 -->
+      <div
+        data-role="chat-root"
+        class="chat-log-container flex flex-1 overflow-y-auto"
+        role="log"
+        aria-label="Chat messages"
+      >
+        <!-- ChatContainerContent：内部内容区域 -->
+        <div
+          data-role="chat-content"
+          class="chat-content flex w-full flex-col space-y-4"
+        >
+          <!-- 示例消息，实际项目里由 JS 动态插入 -->
+          <div class="chat-message">Hello from RenderJS</div>
+          <div class="chat-message">This container can auto-scroll.</div>
+        </div>
+
+        <!-- ChatContainerScrollAnchor：底部锚点 -->
+        <div
+          data-role="chat-scroll-anchor"
+          class="h-px w-full shrink-0 scroll-mt-4"
+          aria-hidden="true"
+        ></div>
       </div>
-    </main>
 
-    <script>
-      (function (RSVP, rJS) {
-        "use strict";
-
-        function buildDemoMessages() {
-          return [
-            { author: "System", text: "Welcome to the RenderJS chat container demo." },
-            { author: "User", text: "How does scrolling behave when messages grow?" },
-            {
-              author: "Assistant",
-              text: "The container keeps you near the bottom and allows smooth scrolling to new messages.",
-            },
-          ];
-        }
-
-        RSVP.Queue()
-          .push(function () {
-            return rJS(window).createGadget({
-              element: document.getElementById("chat-root"),
-              scope: "chat-container",
-              url: "rjs_components/chat_container.html",
-            });
-          })
-          .push(function (gadget) {
-            return gadget.render({
-              containerClass: "flex h-full flex-1 overflow-y-auto p-4",
-              contentClass: "flex w-full flex-col space-y-4",
-              anchorClass: "h-px w-full shrink-0 scroll-mt-4",
-              messageList: buildDemoMessages(),
-            });
-          })
-          .push(undefined, function (error) {
-            var root = document.getElementById("chat-root");
-            if (root) {
-              root.innerHTML =
-                '<div class="p-4 text-sm text-red-400">Failed to load RenderJS gadget: ' +
-                String(error) +
-                "</div>";
-            }
-          });
-      })(window.RSVP, window.rJS);
-    </script>
+      <!-- 简单输入 + 按钮，方便你测试 append + auto scroll -->
+      <form class="chat-input-row" data-role="chat-input">
+        <input
+          type="text"
+          name="message"
+          placeholder="Type message and press Send"
+          autocomplete="off"
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </body>
 </html>
+
