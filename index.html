@@ -1,13 +1,76 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rag-frontend</title>
+    <title>RJS Chat Container Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.11/dist/tailwind.min.css"
+    />
+    <script src="https://www.renderjs.org/rsvp-latest.js"></script>
+    <script src="https://www.renderjs.org/renderjs-latest.js"></script>
   </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+  <body class="h-full bg-slate-950 text-slate-100">
+    <main class="min-h-screen">
+      <div class="mx-auto max-w-4xl px-4 py-10">
+        <header class="mb-6 space-y-2">
+          <p class="text-sm font-semibold uppercase tracking-wide text-emerald-400">
+            Nexedi RenderJS
+          </p>
+          <h1 class="text-3xl font-bold leading-tight">ChatContainer RJS Demo</h1>
+          <p class="text-slate-300">
+            This page renders the chat container as a Nexedi RenderJS gadget while
+            keeping Tailwind CSS styles in place.
+          </p>
+        </header>
+        <section
+          id="chat-root"
+          class="h-[520px] rounded-xl border border-slate-800 bg-slate-900/70 shadow-lg"
+        ></section>
+      </div>
+    </main>
+
+    <script>
+      (function (RSVP, rJS) {
+        "use strict";
+
+        function buildDemoMessages() {
+          return [
+            { author: "System", text: "Welcome to the RenderJS chat container demo." },
+            { author: "User", text: "How does scrolling behave when messages grow?" },
+            {
+              author: "Assistant",
+              text: "The container keeps you near the bottom and allows smooth scrolling to new messages.",
+            },
+          ];
+        }
+
+        RSVP.Queue()
+          .push(function () {
+            return rJS(window).createGadget({
+              element: document.getElementById("chat-root"),
+              scope: "chat-container",
+              url: "rjs_components/chat_container.html",
+            });
+          })
+          .push(function (gadget) {
+            return gadget.render({
+              className: "flex h-full flex-1 overflow-y-auto p-4",
+              contentClass: "flex w-full flex-col space-y-4",
+              messageList: buildDemoMessages(),
+            });
+          })
+          .push(undefined, function (error) {
+            var root = document.getElementById("chat-root");
+            if (root) {
+              root.innerHTML =
+                '<div class="p-4 text-sm text-red-400">Failed to load RenderJS gadget: ' +
+                String(error) +
+                "</div>";
+            }
+          });
+      })(RSVP, rJS);
+    </script>
   </body>
 </html>
