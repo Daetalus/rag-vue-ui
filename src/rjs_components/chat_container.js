@@ -188,4 +188,4 @@
         ensureAnchor(gadget);
       }
     });
-})(window, rJS, RSVP);
+})(window, window.rJS, window.RSVP);

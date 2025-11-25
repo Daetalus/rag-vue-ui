@@ -8,8 +8,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.11/dist/tailwind.min.css"
     />
-    <script src="https://www.renderjs.org/rsvp-latest.js"></script>
-    <script src="https://www.renderjs.org/renderjs-latest.js"></script>
+    <script src="rsvp.js"></script>
+    <script src="renderjs.js"></script>
   </head>
   <body class="h-full bg-slate-950 text-slate-100">
     <main class="min-h-screen">
@@ -71,7 +71,7 @@
                 "</div>";
             }
           });
-      })(RSVP, rJS);
+      })(window.RSVP, window.rJS);
     </script>
   </body>
 </html>
