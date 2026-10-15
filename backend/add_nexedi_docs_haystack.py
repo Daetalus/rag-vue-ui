@@ -380,8 +380,8 @@ class NexediDocIndexerHaystack:
 
         # Note: Ensure the Ollama URL is correct (extra spaces removed here)
         # IMPORTANT: The URL seems to have trailing spaces in the original. Please verify the correct URL.
-        self.doc_embedder = OllamaDocumentEmbedder(
-            url="http://localhost",  # Ensure this URL is correct
+        self.doc_embedder = OllamaDocumentEmbedder(            
+            url=os.environ.get("EMBED_URL", "http://localhost:11434/api/embeddings"),  # Ensure this URL is correct
             model="bge-m3"
             # model="hf.co/Qwen/Qwen3-Embedding-4B-GGUF:Q4_K_M"
         )

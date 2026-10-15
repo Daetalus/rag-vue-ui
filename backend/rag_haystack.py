@@ -49,7 +49,7 @@ class TitleRetriever:
         self.top_k = top_k
 
         self.title_embedder = OllamaTextEmbedder(
-            url="http://localhost",
+            url="http://localhost:8081/embeddings",
             model="bge-m3"
         )
 
@@ -738,7 +738,7 @@ app.add_middleware(
 )
 
 # Updated configuration to match your new setup
-BASE_URL = "http://localhost"
+LLM_BASE_URL = os.environ.get("LLM_BASE_URL", "http://localhost:8080/v1")
 GENERAL_MODEL = "hf.co/unsloth/Qwen3-30B-A3B-Instruct-2507-GGUF:Q4_K_XL"
 # EMBED_MODEL = "nomic-embed-text"  # Updated to match your new embedding model
 EMBED_MODEL = "bge-m3"  # Updated to match your new embedding model

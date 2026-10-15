@@ -157,11 +157,11 @@ def main():
         "--base-url",
         type=str,
         default=os.environ.get(
-            "EMBED_BASE_URL", "http://localhost/embeddings"
+            "EMBED_BASE_URL", "http://localhost:11434/api/embeddings"
         ),
         help=(
             "Base URL for llama.cpp embeddings endpoint "
-            "(default: http://localhost/embeddings)"
+            "(default: http://localhost:11434/api/embeddings)"
         ),
     )
     parser.add_argument(

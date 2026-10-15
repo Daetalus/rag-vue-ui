@@ -286,8 +286,8 @@ def main() -> None:
     parser.add_argument(
         "--embed-base-url",
         type=str,
-        default=os.environ.get("EMBED_BASE_URL", "http://localhost"),
-        help="Base URL for llama.cpp server (default: http://localhost)",
+        default=os.environ.get("EMBED_URL", "http://localhost:11434/api/embeddings"),
+        help="Base URL for llama.cpp server (default: http://localhost:11434/api/embeddings)",
     )
     parser.add_argument(
         "--log-dir",

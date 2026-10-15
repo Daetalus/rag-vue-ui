@@ -35,7 +35,7 @@ class NexediTitleIndexer:
             collection_name=self.collection_name
         )
         self.doc_embedder = OllamaDocumentEmbedder(
-            url="http://localhost",
+            url="http://localhost:11434/api/embeddings",
             model="bge-m3"
         )
 
