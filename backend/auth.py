@@ -8,7 +8,7 @@ import schemas, crud, database
 import os
 
 # Configuration
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me") # TODO: Change this to an environment variable
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
